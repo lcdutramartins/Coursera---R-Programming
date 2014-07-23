@@ -1,0 +1,17 @@
+{
+    "contents" : "complete <- function(directory, id = 1:332) \n{\n  ## 'directory' is a character vector of length 1 indicating the location of the CSV files\n  ## 'id' is an integer vector indicating the monitor ID numbers to be used\n  \n  ## Return a data frame of the form below, where 'id' is the monitor ID number and 'nobs' is the number of complete cases \n  ## id nobs\n  ## 1  117\n  ## 2  1041\n  ## ...\n  \n  idResults <- id\n  nobsResults <- id\n  \n  tabData <- data.frame(Date = factor(), sulfate=numeric(), nitrate=numeric(), ID=integer())\n  dataClasses <- sapply(tabData, class)\n  for (i in seq_along(id))\n  {\n    filePath <- paste(directory, \"/\", formatC(id[i], width = 3, flag = \"0\"), \".csv\", sep = \"\")\n    tabData <- read.csv(filePath, colClasses = dataClasses)\n    \n    idResults[i] <- id[i]\n    nobsResults[i] <- sum(complete.cases(tabData))\n  }\n\n  results <- data.frame(id=idResults, nobs=nobsResults)\n  \n  return(results)\n}",
+    "created" : 1400105184168.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3515811268",
+    "id" : "167652E0",
+    "lastKnownWriteTime" : 1400106808,
+    "path" : "E:/Work/GitHub/Coursera---R-Programming/Assignment 1/complete.R",
+    "project_path" : "complete.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}

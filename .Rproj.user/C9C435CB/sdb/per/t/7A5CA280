@@ -1,0 +1,17 @@
+{
+    "contents" : "best <- function(state, outcome)\n{\n  ## Read outcome data\n  data <- read.csv(\"outcome-of-care-measures.csv\", colClasses = \"character\")\n  \n  ## Check that state and outcome are valid\n  if (!(state %in% data$State))\n  {\n    stop(\"invalid state\")\n  }\n  if (outcome != \"heart attack\" && outcome != \"heart failure\" && outcome != \"pneumonia\")\n  {\n    stop(\"invalid outcome\")\n  }\n  \n  ## Return hospital name in that state with lowest 30-day death rate\n  dataColumn <- if(outcome == \"heart attack\") { 11 } else if(outcome == \"heart failure\") { 17 } else { 23 }\n  \n  stateIndexes <- data$State == state\n  casesIndexes <- !is.na(as.numeric(data[[dataColumn]]))\n\n  bestRate <- min(as.numeric(data[[dataColumn]][stateIndexes & casesIndexes]))\n  ratesIndexes <- as.numeric(data[[dataColumn]]) == bestRate\n\n  bestHospitals <- data$Hospital.Name[stateIndexes & casesIndexes & ratesIndexes]\n\n  untieOrder <- order(bestHospitals)\n  \n  bestHospitals[untieOrder][1]\n}",
+    "created" : 1400629432626.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3566470665",
+    "id" : "7A5CA280",
+    "lastKnownWriteTime" : 1400637641,
+    "path" : "E:/Work/GitHub/Coursera---R-Programming/Assignment 3/best.R",
+    "project_path" : "Assignment 3/best.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}

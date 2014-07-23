@@ -1,0 +1,17 @@
+{
+    "contents" : "pollutantmean <- function(directory, pollutant, id = 1:332)\n{\n  ## 'directory' is a character vector of length 1 indicating the location of the CSV files\n  ## 'pollutant' is a character vector of length 1 indicating the name of the pollutant for which we will calculate the mean; either \"sulfate\" or \"nitrate\".\n  ## 'id' is an integer vector indicating the monitor ID numbers to be used\n  \n  ## Return the mean of the pollutant across all monitors list in the 'id' vector (ignoring NA values)\n  \n  tabResults <- data.frame(Date = factor(), sulfate=numeric(), nitrate=numeric(), ID=integer())\n  classes <- sapply(tabResults, class)\n  for (i in id)\n  {\n    filePath <- paste(directory, \"/\", formatC(i, width = 3, flag = \"0\"), \".csv\", sep = \"\")\n    tabPartial <- read.csv(filePath, colClasses = classes)\n    tabResults <- rbind(tabResults, tabPartial)\n  }\n  \n  meanResult <- mean(tabResults[[pollutant]][!is.na(tabResults[[pollutant]])])\n  \n  return(meanResult)\n}",
+    "created" : 1400096521340.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "748673262",
+    "id" : "DA7349BA",
+    "lastKnownWriteTime" : 1400106811,
+    "path" : "E:/Work/GitHub/Coursera---R-Programming/Assignment 1/pollutantmean.R",
+    "project_path" : "pollutantmean.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}

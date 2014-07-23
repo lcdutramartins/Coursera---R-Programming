@@ -1,0 +1,17 @@
+{
+    "contents" : "rankhospital <- function(state, outcome, num = \"best\")\n{\n  ## Read outcome data\n  data <- read.csv(\"outcome-of-care-measures.csv\", colClasses = \"character\")\n  \n  ## Check that state and outcome are valid\n  if (!(state %in% data$State))\n  {\n    stop(\"invalid state\")\n  }\n  if (outcome != \"heart attack\" && outcome != \"heart failure\" && outcome != \"pneumonia\")\n  {\n    stop(\"invalid outcome\")\n  }\n  if (!is.numeric(num) && num != \"best\" && num != \"worst\")\n  {\n    stop(\"invalid num\")\n  }\n  \n  ## Return hospital name in that state with the given rank 30-day death rate\n  dataColumn <- if(outcome == \"heart attack\") { 11 } else if(outcome == \"heart failure\") { 17 } else { 23 }\n  \n  indexes <- data$State == state & !is.na(as.numeric(data[[dataColumn]]))\n\n  hospitalRank <- order(data$Hospital.Name[indexes])\n  valueRank <- order(as.numeric(data[[dataColumn]][indexes][hospitalRank]))\n  \n  result <- if (is.numeric(num)) { num } else if (num == \"best\") { 1 } else if (num == \"worst\") { length(valueRank) } else { NA }\n  \n  rankHospital <- if (is.na(result)) { NA } else { data$Hospital.Name[indexes][hospitalRank][valueRank][result] }\n  \n  rankHospital\n}",
+    "created" : 1400638019429.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "92837898",
+    "id" : "54870077",
+    "lastKnownWriteTime" : 1400643334,
+    "path" : "E:/Work/GitHub/Coursera---R-Programming/Assignment 3/rankhospital.R",
+    "project_path" : "Assignment 3/rankhospital.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}

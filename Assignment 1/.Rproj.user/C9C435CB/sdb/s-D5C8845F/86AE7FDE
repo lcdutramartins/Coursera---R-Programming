@@ -1,0 +1,17 @@
+{
+    "contents" : "corr <- function(directory, threshold = 0) \n{\n  ## 'directory' is a character vector of length 1 indicating the location of the CSV files\n  ## 'threshold' is a numeric vector of length 1 indicating the number of completely observed observations (on all variables) required to compute the correlation between nitrate and sulfate\n  \n  ## Return a numeric vector of correlations\n\n  results <- numeric(0)\n  index <- 1\n  \n  tabEmpty <- data.frame(Date = factor(), sulfate=numeric(), nitrate=numeric(), ID=integer())\n  classes <- sapply(tabEmpty, class)\n  \n  for (id in 1:332)\n  {\n    filePath <- paste(directory, \"/\", formatC(id, width = 3, flag = \"0\"), \".csv\", sep = \"\")\n    tabData <- read.csv(filePath, colClasses = classes)\n    filter <- complete.cases(tabData)\n    \n    if (sum(filter) > threshold)\n    {\n      results[index] <- cor(tabData[[\"sulfate\"]][filter], tabData[[\"nitrate\"]][filter])\n      index <- index + 1\n    }\n  }\n  \n  return(results)\n}",
+    "created" : 1400106999321.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "646395657",
+    "id" : "86AE7FDE",
+    "lastKnownWriteTime" : 1400108199,
+    "path" : "E:/Work/GitHub/Coursera---R-Programming/Assignment 1/corr.R",
+    "project_path" : "corr.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}
